@@ -16,7 +16,8 @@ const INITIAL_DATA = {
       "Gimnasio",
       "Tecnología",
       "Viajes"
-    ]
+    ],
+    "googleSheetsUrl": ""
   },
   "incomes": [
     {
@@ -691,6 +692,27 @@ let state = loadState();
 let currentTab = 'dashboard';
 let charts = {};
 
+let syncTimeout = null;
+let isSyncing = false;
+
+function updateSyncStatus(status) {
+  const el = document.getElementById('cloud-sync-status');
+  if (!el) return;
+  if (status === 'synced') {
+    el.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800';
+    el.innerHTML = '<span>🟢</span> <span class="hidden sm:inline">Google Sheets Sincronizado</span>';
+  } else if (status === 'syncing') {
+    el.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800 animate-pulse';
+    el.innerHTML = '<span>⏳</span> <span class="hidden sm:inline">Sincronizando...</span>';
+  } else if (status === 'error') {
+    el.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800';
+    el.innerHTML = '<span>⚠️</span> <span class="hidden sm:inline">Error al conectar Sheets</span>';
+  } else {
+    el.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-slate-700/60 text-slate-500 dark:text-slate-400';
+    el.innerHTML = '<span>☁️</span> <span class="hidden sm:inline">Modo Local (Offline)</span>';
+  }
+}
+
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
@@ -708,6 +730,73 @@ function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   } catch (e) {
     console.error('Error saving state', e);
+  }
+
+  // Sincronización en segundo plano con Google Sheets si está configurado
+  if (state.settings && state.settings.googleSheetsUrl && state.settings.googleSheetsUrl.trim() !== '') {
+    debounceGoogleSheetsSync();
+  } else {
+    updateSyncStatus('local');
+  }
+}
+
+function debounceGoogleSheetsSync() {
+  if (syncTimeout) clearTimeout(syncTimeout);
+  updateSyncStatus('syncing');
+  syncTimeout = setTimeout(() => {
+    pushToGoogleSheets();
+  }, 1200);
+}
+
+async function pushToGoogleSheets() {
+  const url = state.settings && state.settings.googleSheetsUrl;
+  if (!url) return;
+  try {
+    isSyncing = true;
+    updateSyncStatus('syncing');
+    await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'text/plain'
+      },
+      body: JSON.stringify(state)
+    });
+    isSyncing = false;
+    updateSyncStatus('synced');
+  } catch (err) {
+    console.error('Error syncing to Google Sheets', err);
+    isSyncing = false;
+    updateSyncStatus('error');
+  }
+}
+
+async function loadFromGoogleSheets() {
+  const url = state.settings && state.settings.googleSheetsUrl;
+  if (!url) {
+    updateSyncStatus('local');
+    return;
+  }
+  try {
+    updateSyncStatus('syncing');
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if (data && !data.empty && !data.error && data.incomes && data.expenses) {
+      state = data;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      renderCurrentTab();
+      updateSyncStatus('synced');
+      showToast('Sincronizado con Google Sheets ✓', 'success');
+    } else {
+      if (data && data.empty) {
+        // La hoja está nueva, enviamos los datos iniciales
+        pushToGoogleSheets();
+      }
+      updateSyncStatus('synced');
+    }
+  } catch (err) {
+    console.warn('Could not pull from Google Sheets, using local state', err);
+    updateSyncStatus('error');
   }
 }
 
@@ -2098,12 +2187,67 @@ function deleteGoal(id) {
 // 8. SETTINGS & DATA BACKUP
 // -------------------------------------------------------------
 function renderSettings(container) {
+  const hasSheets = state.settings && state.settings.googleSheetsUrl && state.settings.googleSheetsUrl.trim() !== '';
+
   container.innerHTML = `
     <div class="space-y-6 max-w-4xl">
       <!-- Settings Header -->
       <div>
         <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white">Ajustes & Gestión de Datos</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Personalización de usuario, exportación y respaldo de la información</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400">Personalización de usuario, sincronización con Google Sheets y respaldos</p>
+      </div>
+
+      <!-- Cloud Database: Google Sheets Sync -->
+      <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5">
+            <span class="text-2xl">🟢</span>
+            <div>
+              <h2 class="text-base font-bold text-gray-900 dark:text-white">Base de Datos: Google Sheets</h2>
+              <p class="text-xs text-gray-500">Sincronización automática en tiempo real con tu Google Drive (Móvil y PC)</p>
+            </div>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold ${
+            hasSheets ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300' :
+            'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
+          }">
+            ${hasSheets ? '✓ Conectado a Sheets' : 'Modo Local (Sin Nube)'}
+          </span>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-700/40 border border-slate-200 dark:border-slate-700 text-xs space-y-2 text-slate-600 dark:text-slate-300">
+          <p class="font-bold text-slate-800 dark:text-white">¿Cómo conectar tu Google Sheet?</p>
+          <ol class="list-decimal list-inside space-y-1 text-[11px] text-slate-500 dark:text-slate-400">
+            <li>Crea una hoja en Google Sheets (<a href="https://sheets.new" target="_blank" class="text-indigo-600 dark:text-indigo-400 underline font-semibold">sheets.new</a>).</li>
+            <li>Ve a <strong>Extensiones > Apps Script</strong>, pega el código del archivo <code class="px-1 py-0.5 rounded bg-gray-200 dark:bg-gray-600 text-indigo-600 dark:text-indigo-300 font-mono">google-sheets-script.js</code> y guarda.</li>
+            <li>Haz clic en <strong>Implementar > Nueva implementación > Aplicación web</strong> (Acceso: <em>Cualquiera</em>).</li>
+            <li>Copia la <strong>URL de la aplicación web</strong> (termina en <em>/exec</em>) y pégala en el campo de abajo.</li>
+          </ol>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-1">URL de Google Apps Script Web App (/exec)</label>
+          <input type="url" id="setting-googleSheetsUrl" value="${(state.settings && state.settings.googleSheetsUrl) || ''}" 
+            placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+            class="w-full px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 text-xs font-mono focus:ring-2 focus:ring-indigo-500">
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 pt-1">
+          <button onclick="saveGoogleSheetsSettings()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-sm transition">
+            Guardar y Conectar
+          </button>
+          ${hasSheets ? `
+            <button onclick="pushToGoogleSheets(); showToast('Enviando datos a Google Sheets...');" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition">
+              ⬆️ Forzar Subida a Sheets
+            </button>
+            <button onclick="loadFromGoogleSheets()" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 text-slate-700 dark:text-slate-200 font-semibold text-xs transition">
+              ⬇️ Forzar Descarga de Sheets
+            </button>
+            <button onclick="disconnectGoogleSheets()" class="px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs font-semibold transition">
+              Desconectar
+            </button>
+          ` : ''}
+        </div>
       </div>
 
       <!-- User Profile Settings -->
@@ -2136,18 +2280,22 @@ function renderSettings(container) {
         </div>
 
         <button onclick="saveUserProfileSettings()" class="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition">
-          Guardar Cambios
+          Guardar Cambios de Perfil
         </button>
       </div>
 
-      <!-- Backup & Restore -->
+      <!-- Backup, JSON & Excel Export -->
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
-        <h2 class="text-base font-bold text-gray-900 dark:text-white">Exportar & Importar Datos (JSON)</h2>
-        <p class="text-xs text-gray-500">Puedes descargar una copia exacta de todos tus datos en JSON para respaldar o restaurar en otro navegador.</p>
+        <h2 class="text-base font-bold text-gray-900 dark:text-white">Exportar & Importar Datos (Excel / JSON)</h2>
+        <p class="text-xs text-gray-500">Descarga copias de seguridad en JSON o tablas formateadas en CSV compatibles con Microsoft Excel.</p>
 
         <div class="flex flex-wrap gap-3">
-          <button onclick="exportJSONBackup()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-sm transition">
-            <span>📥</span> Exportar Respaldo JSON
+          <button onclick="exportToExcel()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs shadow-sm transition">
+            <span>📊</span> Exportar a Excel (CSV)
+          </button>
+
+          <button onclick="exportJSONBackup()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-semibold text-xs shadow-sm transition">
+            <span>📥</span> Respaldo JSON Completo
           </button>
 
           <label class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-sm transition cursor-pointer">
@@ -2156,12 +2304,38 @@ function renderSettings(container) {
           </label>
 
           <button onclick="resetToDefault()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-sm transition">
-            <span>🔄</span> Restablecer Datos Originales
+            <span>🔄</span> Restablecer Fábrica
           </button>
         </div>
       </div>
     </div>
   `;
+}
+
+function saveGoogleSheetsSettings() {
+  const url = (document.getElementById('setting-googleSheetsUrl').value || '').trim();
+  if (!state.settings) state.settings = {};
+  state.settings.googleSheetsUrl = url;
+  saveState();
+  if (url) {
+    showToast('Conectando con Google Sheets...', 'info');
+    loadFromGoogleSheets();
+  } else {
+    updateSyncStatus('local');
+    showToast('Modo local activado');
+  }
+  renderSettings(document.getElementById('main-content'));
+}
+
+function disconnectGoogleSheets() {
+  if (confirm('¿Desconectar la sincronización de Google Sheets? Tus datos locales se conservarán.')) {
+    if (!state.settings) state.settings = {};
+    state.settings.googleSheetsUrl = '';
+    saveState();
+    updateSyncStatus('local');
+    showToast('Desconectado de Google Sheets');
+    renderSettings(document.getElementById('main-content'));
+  }
 }
 
 function saveUserProfileSettings() {
@@ -2178,6 +2352,41 @@ function saveUserProfileSettings() {
   saveState();
   applyTheme();
   showToast('Ajustes guardados correctamente', 'success');
+}
+
+function exportToExcel() {
+  // Export formatted CSV with UTF-8 BOM so Microsoft Excel opens it directly without encoding issues
+  let csvContent = '\uFEFF';
+
+  // Gastos
+  csvContent += "=== GASTOS ===\r\n";
+  csvContent += "Fecha;Concepto;Categoria;Importe;Fijo;Notas\r\n";
+  state.expenses.forEach(e => {
+    csvContent += `"${e.date}";"${e.concept}";"${e.category}";"${e.amount.toString().replace('.', ',')}";"${e.isFixed ? 'SI' : 'NO'}";"${e.notes || ''}"\r\n`;
+  });
+
+  // Ingresos
+  csvContent += "\r\n=== INGRESOS ===\r\n";
+  csvContent += "Fecha;Concepto;Importe;Recurrente;Notas\r\n";
+  state.incomes.forEach(i => {
+    csvContent += `"${i.date}";"${i.concept}";"${i.amount.toString().replace('.', ',')}";"${i.isRecurring ? 'SI' : 'NO'}";"${i.notes || ''}"\r\n`;
+  });
+
+  // Tareas
+  csvContent += "\r\n=== TAREAS ===\r\n";
+  csvContent += "Titulo;Vencimiento;Hora;Prioridad;Categoria;Completada\r\n";
+  state.tasks.forEach(t => {
+    csvContent += `"${t.title}";"${t.dueDate}";"${t.dueTime || ''}";"${t.priority}";"${t.category}";"${t.completed ? 'SI' : 'NO'}"\r\n`;
+  });
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `bilal-life-os-datos-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Archivo CSV para Excel descargado ✓', 'success');
 }
 
 function exportJSONBackup() {
@@ -2442,6 +2651,11 @@ function submitAddWorkout(e) {
 function renderApp() {
   applyTheme();
   setTab(currentTab);
+  if (state.settings && state.settings.googleSheetsUrl && state.settings.googleSheetsUrl.trim() !== '') {
+    loadFromGoogleSheets();
+  } else {
+    updateSyncStatus('local');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

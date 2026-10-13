@@ -4,6 +4,9 @@ Un cuadro de mando personal interactivo y sistema operativo de vida desarrollado
 
 ## 🌟 Características
 
+- **🟢 Base de Datos en la Nube con Google Sheets**:
+  - Sincronización automática en tiempo real con tu Google Drive (móvil y PC).
+  - Almacena todos tus datos y genera automáticamente pestañas legibles en Google Sheets (*Gastos*, *Ingresos*, *Tareas*, *Hábitos*).
 - **📊 Dashboard Resumen**: Vista centralizada de finanzas, hábitos diarios, tareas pendientes y progreso general.
 - **💰 Finanzas & Presupuestos**:
   - Registro de ingresos y gastos con cálculo de balance neto y control presupuestario.
@@ -24,30 +27,31 @@ Un cuadro de mando personal interactivo y sistema operativo de vida desarrollado
   - Cálculo automático del coste total estimado.
 - **🏆 Metas & Objetivos**:
   - Barras de progreso dinámicas con controles rápidos (+1, +5, -1) para actualizar el avance.
-- **⚙️ Ajustes & Respaldo**:
+- **⚙️ Ajustes, Excel & Respaldo**:
+  - Exportación directa a **Microsoft Excel (.csv)**.
+  - Exportación e importación completa en formato **JSON**.
   - Modo Claro / Modo Oscuro.
-  - Exportación e importación completa en formato JSON.
-  - Persistencia local automática (`localStorage`).
+  - Persistencia local automática (`localStorage`) cuando no hay conexión.
 
 ## 📁 Estructura del Proyecto
 
 ```text
 bilal-dashboard/
-├── index.html        # Estructura principal y modales
-├── app.js            # Lógica, estado y visualización con Chart.js
-├── style.css         # Estilos personalizados y temas
-├── data.json         # Datos iniciales en JSON
-└── README.md         # Documentación
+├── index.html                # Estructura principal, modales e indicador de nube
+├── app.js                    # Lógica, sincronización de Google Sheets y gráficas
+├── style.css                 # Estilos personalizados y modo oscuro
+├── data.json                 # Datos iniciales en JSON
+├── google-sheets-script.js   # Script para convertir Google Sheets en tu backend
+└── README.md                 # Documentación
 ```
 
-## 🚀 Cómo Ejecutar
+## 🟢 Cómo conectar Google Sheets como Base de Datos
 
-Simplemente abre `index.html` en cualquier navegador web moderno:
-
-```bash
-# En Windows PowerShell
-Start-Process index.html
-```
+1. Abre [sheets.new](https://sheets.new) en tu navegador para crear una hoja nueva en Google Sheets.
+2. En el menú superior, ve a **Extensiones > Apps Script**.
+3. Pega el código que está en el archivo [`google-sheets-script.js`](./google-sheets-script.js) y guarda.
+4. Pulsa **Implementar > Nueva implementación**, selecciona **Aplicación web** (Ejecutar como: *Yo*, Quién tiene acceso: *Cualquiera*).
+5. Copia la URL generada (`.../exec`) y pégala en tu Dashboard en **Ajustes > Base de Datos: Google Sheets**. ¡Y listo! Todo se sincronizará automáticamente.
 
 ---
 Diseñado y construido para Bilal.
