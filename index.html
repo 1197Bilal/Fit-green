@@ -213,13 +213,21 @@
       </div>
       <form onsubmit="submitAddIncome(event)" class="space-y-4">
         <div>
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Tipo de Ingreso</label>
+          <select id="inc-type" onchange="onIncomeTypeChange()" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 font-medium">
+            <option value="nomina">💼 Nómina Mensual</option>
+            <option value="bonus">🎯 Bonus (2 veces al año)</option>
+            <option value="extra">⚡ Ingreso Extra / Puntual</option>
+          </select>
+        </div>
+        <div>
           <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Concepto</label>
-          <input type="text" id="inc-concept" required placeholder="Ej: Nómina, Freelance..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500">
+          <input type="text" id="inc-concept" required value="Nómina Mensual" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Importe (€)</label>
-            <input type="number" id="inc-amount" step="0.01" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500">
+            <input type="number" id="inc-amount" step="0.01" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-emerald-500 font-bold">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Fecha</label>
@@ -227,12 +235,12 @@
           </div>
         </div>
         <div>
-          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Notas</label>
-          <input type="text" id="inc-notes" placeholder="Detalle adicional opcional..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm">
+          <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Notas / Detalle</label>
+          <input type="text" id="inc-notes" placeholder="Ej: Nómina del mes, Bonus semestral de verano/invierno..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm">
         </div>
         <div class="flex items-center gap-2">
-          <input type="checkbox" id="inc-recurring" class="w-4 h-4 rounded text-emerald-600">
-          <label for="inc-recurring" class="text-xs text-slate-600 dark:text-slate-300">Ingreso recurrente mensual</label>
+          <input type="checkbox" id="inc-recurring" checked class="w-4 h-4 rounded text-emerald-600">
+          <label for="inc-recurring" class="text-xs text-slate-600 dark:text-slate-300">Marcar como ingreso recurrente</label>
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('addIncomeModal')" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100">Cancelar</button>
@@ -244,7 +252,7 @@
 
   <!-- Add Expense Modal -->
   <div id="addExpenseModal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-100 dark:border-slate-700 modal-enter">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-100 dark:border-slate-700 modal-enter max-h-[90vh] overflow-y-auto">
       <div class="flex justify-between items-center mb-4">
         <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Nuevo Gasto</h3>
         <button onclick="closeModal('addExpenseModal')" class="text-slate-400 hover:text-slate-600">✕</button>
@@ -252,26 +260,24 @@
       <form onsubmit="submitAddExpense(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Concepto</label>
-          <input type="text" id="exp-concept" required placeholder="Ej: Compra, Gasolina, Cena..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-rose-500">
+          <input type="text" id="exp-concept" required placeholder="Ej: Gimnasio, Alquiler, Compra, O2..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-rose-500">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Importe (€)</label>
-            <input type="number" id="exp-amount" step="0.01" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-rose-500">
+            <input type="number" id="exp-amount" step="0.01" required placeholder="0.00" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-rose-500 font-bold">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Categoría</label>
             <select id="exp-category" class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm focus:ring-2 focus:ring-rose-500">
+              <option value="Hogar">Hogar / Vivienda</option>
               <option value="Alimentación">Alimentación</option>
-              <option value="Hogar">Hogar</option>
+              <option value="Gimnasio">Gimnasio & Salud</option>
+              <option value="Suscripciones">Suscripciones & Ocio</option>
+              <option value="Transporte">Transporte / Moto / Coche</option>
               <option value="Restaurantes">Restaurantes</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Ocio">Ocio</option>
-              <option value="Salud">Salud</option>
-              <option value="Compras">Compras</option>
-              <option value="Gimnasio">Gimnasio</option>
-              <option value="Tecnología">Tecnología</option>
-              <option value="Viajes">Viajes</option>
+              <option value="Compras">Compras & Tecnología</option>
+              <option value="Otros">Otros</option>
             </select>
           </div>
         </div>
@@ -282,9 +288,40 @@
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Notas</label>
-            <input type="text" id="exp-notes" placeholder="Opcional..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm">
+            <input type="text" id="exp-notes" placeholder="Detalle opcional..." class="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-700 text-sm">
           </div>
         </div>
+
+        <!-- Opción para convertir en Gasto Fijo Recurrente -->
+        <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 space-y-3">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="exp-make-fixed" onchange="toggleFixedOptions()" class="w-4 h-4 rounded text-indigo-600 cursor-pointer">
+            <label for="exp-make-fixed" class="text-xs font-bold text-slate-800 dark:text-white cursor-pointer">
+              📌 Convertir en Gasto Fijo Recurrente
+            </label>
+          </div>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">
+            Si lo marcas, se añadirá automáticamente a tus <strong>Gastos Fijos Programados</strong> para que se repita siempre.
+          </p>
+
+          <div id="fixed-options-container" class="hidden grid grid-cols-2 gap-3 pt-1 border-t border-slate-200 dark:border-slate-600">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Día de cobro (1-31)</label>
+              <input type="number" id="exp-fixed-day" min="1" max="31" value="1" class="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 dark:bg-slate-700 text-xs font-bold">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-300 mb-1">Frecuencia</label>
+              <select id="exp-fixed-freq" class="w-full px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 dark:bg-slate-700 text-xs font-semibold">
+                <option value="mensual" selected>Mensual</option>
+                <option value="bimestral">Bimestral (cada 2 meses)</option>
+                <option value="trimestral">Trimestral</option>
+                <option value="semestral">Semestral (2 veces/año)</option>
+                <option value="anual">Anual (1 vez/año)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <div class="flex justify-end gap-2 pt-2">
           <button type="button" onclick="closeModal('addExpenseModal')" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100">Cancelar</button>
           <button type="submit" class="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white">Registrar Gasto</button>

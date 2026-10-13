@@ -4,278 +4,65 @@
  */
 
 const INITIAL_DATA = {
-  "version": 1,
+  "version": 2,
   "settings": {
-    "userName": "Bilal ",
+    "userName": "Bilal",
     "theme": "light",
-    "monthlyBudget": 1800,
+    "monthlyBudget": 0,
     "weeklyWorkoutGoal": 4,
     "firstDayOfWeek": "monday",
     "notificationsEnabled": false,
     "customCategories": [
       "Gimnasio",
+      "Suscripciones",
       "Tecnología",
+      "Bonus",
       "Viajes"
     ],
     "googleSheetsUrl": ""
   },
-  "incomes": [
-    {
-      "id": "inc-1",
-      "concept": "Nómina Mensual",
-      "amount": 2450,
-      "date": "2026-10-01",
-      "isRecurring": true,
-      "notes": "Ingreso recurrente de trabajo principal",
-      "createdAt": 1790865295503
-    },
-    {
-      "id": "inc-2",
-      "concept": "Proyecto Freelance Frontend",
-      "amount": 380,
-      "date": "2026-10-08",
-      "isRecurring": false,
-      "notes": "Diseño web puntual",
-      "createdAt": 1791470095503
-    }
-  ],
-  "fixedExpenses": [
-    {
-      "id": "fix-1",
-      "concept": "Alquiler Vivienda",
-      "amount": 750,
-      "category": "Hogar",
-      "dayOfMonth": 1,
-      "frequency": "mensual",
-      "active": true,
-      "lastProcessedMonth": "2026-10",
-      "createdAt": 1791901095503
-    },
-    {
-      "id": "fix-2",
-      "concept": "Gimnasio Basic-Fit",
-      "amount": 34.99,
-      "category": "Salud",
-      "dayOfMonth": 5,
-      "frequency": "mensual",
-      "active": true,
-      "lastProcessedMonth": "2026-10",
-      "createdAt": 1791901095503
-    },
-    {
-      "id": "fix-3",
-      "concept": "Suscripción Netflix & Spotify",
-      "amount": 22.98,
-      "category": "Ocio",
-      "dayOfMonth": 12,
-      "frequency": "mensual",
-      "active": true,
-      "createdAt": 1791901095503,
-      "lastProcessedMonth": "2026-10"
-    },
-    {
-      "id": "fix-4",
-      "concept": "Fibra & Móvil O2",
-      "amount": 38,
-      "category": "Hogar",
-      "dayOfMonth": 20,
-      "frequency": "mensual",
-      "active": true,
-      "createdAt": 1791901095503
-    },
-    {
-      "id": "fix-5",
-      "concept": "Seguro Moto Caser",
-      "amount": 145,
-      "category": "Transporte",
-      "dayOfMonth": 25,
-      "frequency": "anual",
-      "active": true,
-      "createdAt": 1791901095503
-    }
-  ],
-  "expenses": [
-    {
-      "id": "exp-fix-fix-3-2026-10",
-      "concept": "Suscripción Netflix & Spotify",
-      "amount": 22.98,
-      "category": "Ocio",
-      "date": "2026-10-12",
-      "isFixed": true,
-      "fixedExpenseId": "fix-3",
-      "notes": "Pago automático recurrente (mensual)",
-      "createdAt": 1791902095676
-    },
-    {
-      "id": "exp-1",
-      "concept": "Alquiler Vivienda",
-      "amount": 750,
-      "category": "Hogar",
-      "date": "2026-10-01",
-      "isFixed": true,
-      "fixedExpenseId": "fix-1",
-      "createdAt": 1790865295503
-    },
-    {
-      "id": "exp-2",
-      "concept": "Gimnasio Basic-Fit",
-      "amount": 34.99,
-      "category": "Salud",
-      "date": "2026-10-05",
-      "isFixed": true,
-      "fixedExpenseId": "fix-2",
-      "createdAt": 1791210895503
-    },
-    {
-      "id": "exp-3",
-      "concept": "Compra semanal Mercadona",
-      "amount": 68.45,
-      "category": "Alimentación",
-      "date": "2026-10-06",
-      "notes": "Frescos, pechugas y fruta",
-      "createdAt": 1791297295503
-    },
-    {
-      "id": "exp-4",
-      "concept": "Gasolina Repsol",
-      "amount": 45,
-      "category": "Transporte",
-      "date": "2026-10-09",
-      "createdAt": 1791556495503
-    },
-    {
-      "id": "exp-5",
-      "concept": "Cena con amigos Pizzería",
-      "amount": 28.5,
-      "category": "Restaurantes",
-      "date": "2026-10-11",
-      "createdAt": 1791729295503
-    }
-  ],
+  "incomes": [],
+  "fixedExpenses": [],
+  "expenses": [],
   "categoryBudgets": [
-    {
-      "category": "Alimentación",
-      "limit": 300
-    },
-    {
-      "category": "Hogar",
-      "limit": 850
-    },
-    {
-      "category": "Restaurantes",
-      "limit": 150
-    },
-    {
-      "category": "Transporte",
-      "limit": 120
-    },
-    {
-      "category": "Ocio",
-      "limit": 100
-    },
-    {
-      "category": "Salud",
-      "limit": 80
-    },
-    {
-      "category": "Compras",
-      "limit": 150
-    }
+    { "category": "Hogar", "limit": 0 },
+    { "category": "Alimentación", "limit": 0 },
+    { "category": "Gimnasio", "limit": 0 },
+    { "category": "Suscripciones", "limit": 0 },
+    { "category": "Transporte", "limit": 0 },
+    { "category": "Restaurantes", "limit": 0 },
+    { "category": "Compras", "limit": 0 }
   ],
   "shoppingLists": [
     {
       "id": "list-1",
-      "name": "Supermercado Semanal",
+      "name": "Supermercado Básico",
       "createdAt": 1791901595503,
       "items": [
-        {
-          "id": "item-1",
-          "name": "Pechugas de pollo",
-          "quantity": 1,
-          "unit": "kg",
-          "category": "Frescos",
-          "supermarket": "Mercadona",
-          "estimatedPrice": 7.2,
-          "completed": false,
-          "createdAt": 1791901795504
-        },
-        {
-          "id": "item-2",
-          "name": "Huevos Camperos L (12 uds)",
-          "quantity": 2,
-          "unit": "pack",
-          "category": "Frescos",
-          "supermarket": "Mercadona",
-          "estimatedPrice": 5.6,
-          "completed": false,
-          "createdAt": 1791901815504
-        },
-        {
-          "id": "item-3",
-          "name": "Avena integral 1kg",
-          "quantity": 1,
-          "unit": "pack",
-          "category": "Despensa",
-          "supermarket": "Mercadona",
-          "estimatedPrice": 1.85,
-          "completed": true,
-          "createdAt": 1791901845504
-        },
-        {
-          "id": "item-4",
-          "name": "Plátanos de Canarias",
-          "quantity": 1.5,
-          "unit": "kg",
-          "category": "Frescos",
-          "supermarket": "Frutería",
-          "estimatedPrice": 3.1,
-          "completed": false,
-          "createdAt": 1791901895504
-        },
-        {
-          "id": "item-5",
-          "name": "Aceite de Oliva Virgen Extra",
-          "quantity": 1,
-          "unit": "l",
-          "category": "Despensa",
-          "supermarket": "Carrefour",
-          "estimatedPrice": 8.9,
-          "completed": false,
-          "createdAt": 1791901945504
-        }
-      ]
-    },
-    {
-      "id": "list-2",
-      "name": "Farmacia & Cuidado",
-      "createdAt": 1791901695504,
-      "items": [
-        {
-          "id": "item-20",
-          "name": "Protector solar 50+",
-          "quantity": 1,
-          "unit": "ud",
-          "category": "Salud",
-          "supermarket": "Farmacia",
-          "estimatedPrice": 14.5,
-          "completed": false,
-          "createdAt": 1791901995504
-        }
+        { "id": "item-1", "name": "Huevos camperos", "quantity": 1, "unit": "docena", "category": "Frescos", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901795504 },
+        { "id": "item-2", "name": "Leche", "quantity": 6, "unit": "l", "category": "Lácteos", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901815504 },
+        { "id": "item-3", "name": "Pechugas de pollo", "quantity": 1, "unit": "kg", "category": "Frescos", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901845504 },
+        { "id": "item-4", "name": "Arroz", "quantity": 1, "unit": "kg", "category": "Despensa", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901895504 },
+        { "id": "item-5", "name": "Pasta", "quantity": 1, "unit": "pack", "category": "Despensa", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901945504 },
+        { "id": "item-6", "name": "Aceite de Oliva", "quantity": 1, "unit": "l", "category": "Despensa", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901945505 },
+        { "id": "item-7", "name": "Pan", "quantity": 1, "unit": "barra", "category": "Panadería", "supermarket": "Panadería", "estimatedPrice": 0, "completed": false, "createdAt": 1791901945506 },
+        { "id": "item-8", "name": "Fruta variada (Plátanos)", "quantity": 1.5, "unit": "kg", "category": "Frescos", "supermarket": "Frutería", "estimatedPrice": 0, "completed": false, "createdAt": 1791901945507 },
+        { "id": "item-9", "name": "Papel higiénico", "quantity": 1, "unit": "pack", "category": "Hogar", "supermarket": "Mercadona", "estimatedPrice": 0, "completed": false, "createdAt": 1791901945508 }
       ]
     }
   ],
   "activeShoppingListId": "list-1",
   "frequentShoppingItems": [
-    "Pechugas de pollo",
     "Huevos camperos",
-    "Plátanos",
-    "Arroz integral",
-    "Leche de avena",
-    "Yogur griego",
+    "Leche",
+    "Pechugas de pollo",
+    "Arroz",
+    "Pasta",
     "Aceite de oliva",
-    "Aguacates",
-    "Café en grano",
-    "Detergente lavadora"
+    "Plátanos",
+    "Pan",
+    "Avena",
+    "Café"
   ],
   "routines": [
     {
@@ -284,36 +71,10 @@ const INITIAL_DATA = {
       "activity": "Gimnasio",
       "dayOfWeek": 1,
       "exercises": [
-        {
-          "name": "Press de banca con barra",
-          "targetSets": 4,
-          "targetReps": 8,
-          "targetWeightKg": 75
-        },
-        {
-          "name": "Press inclinado mancuernas",
-          "targetSets": 3,
-          "targetReps": 10,
-          "targetWeightKg": 26
-        },
-        {
-          "name": "Cruces en polea",
-          "targetSets": 3,
-          "targetReps": 12,
-          "targetWeightKg": 15
-        },
-        {
-          "name": "Fondos en paralelas",
-          "targetSets": 3,
-          "targetReps": 10,
-          "targetWeightKg": 0
-        },
-        {
-          "name": "Extensiones de tríceps en polea",
-          "targetSets": 4,
-          "targetReps": 12,
-          "targetWeightKg": 25
-        }
+        { "name": "Press de banca", "targetSets": 4, "targetReps": 8, "targetWeightKg": 0 },
+        { "name": "Press inclinado mancuernas", "targetSets": 3, "targetReps": 10, "targetWeightKg": 0 },
+        { "name": "Cruces en polea", "targetSets": 3, "targetReps": 12, "targetWeightKg": 0 },
+        { "name": "Extensiones de tríceps", "targetSets": 4, "targetReps": 12, "targetWeightKg": 0 }
       ]
     },
     {
@@ -322,36 +83,9 @@ const INITIAL_DATA = {
       "activity": "Gimnasio",
       "dayOfWeek": 2,
       "exercises": [
-        {
-          "name": "Dominadas pronas",
-          "targetSets": 4,
-          "targetReps": 8,
-          "targetWeightKg": 0
-        },
-        {
-          "name": "Remo con barra 90º",
-          "targetSets": 4,
-          "targetReps": 8,
-          "targetWeightKg": 70
-        },
-        {
-          "name": "Jalón al pecho agarre neutro",
-          "targetSets": 3,
-          "targetReps": 10,
-          "targetWeightKg": 65
-        },
-        {
-          "name": "Curl de bíceps con barra Z",
-          "targetSets": 3,
-          "targetReps": 10,
-          "targetWeightKg": 30
-        },
-        {
-          "name": "Curl martillo mancuernas",
-          "targetSets": 3,
-          "targetReps": 12,
-          "targetWeightKg": 14
-        }
+        { "name": "Dominadas / Jalón al pecho", "targetSets": 4, "targetReps": 8, "targetWeightKg": 0 },
+        { "name": "Remo con barra", "targetSets": 4, "targetReps": 8, "targetWeightKg": 0 },
+        { "name": "Curl de bíceps", "targetSets": 3, "targetReps": 10, "targetWeightKg": 0 }
       ]
     },
     {
@@ -360,328 +94,32 @@ const INITIAL_DATA = {
       "activity": "Gimnasio",
       "dayOfWeek": 4,
       "exercises": [
-        {
-          "name": "Sentadilla trasera",
-          "targetSets": 4,
-          "targetReps": 6,
-          "targetWeightKg": 100
-        },
-        {
-          "name": "Prensa inclinada",
-          "targetSets": 3,
-          "targetReps": 10,
-          "targetWeightKg": 180
-        },
-        {
-          "name": "Peso muerto rumano",
-          "targetSets": 3,
-          "targetReps": 10,
-          "targetWeightKg": 80
-        },
-        {
-          "name": "Elevación de talones",
-          "targetSets": 4,
-          "targetReps": 15,
-          "targetWeightKg": 60
-        },
-        {
-          "name": "Plancha abdominal",
-          "targetSets": 3,
-          "targetReps": 60,
-          "targetWeightKg": 0
-        }
+        { "name": "Sentadilla", "targetSets": 4, "targetReps": 8, "targetWeightKg": 0 },
+        { "name": "Prensa inclinada", "targetSets": 3, "targetReps": 10, "targetWeightKg": 0 },
+        { "name": "Plancha abdominal", "targetSets": 3, "targetReps": 60, "targetWeightKg": 0 }
       ]
     },
     {
       "id": "rou-4",
-      "name": "Carrera continua 6K",
+      "name": "Cardio / Carrera",
       "activity": "Correr",
       "dayOfWeek": 6,
       "exercises": []
     }
   ],
-  "workouts": [
-    {
-      "id": "work-1",
-      "date": "2026-10-06",
-      "activity": "Gimnasio",
-      "routineName": "Torso: Pecho y Tríceps",
-      "durationMinutes": 65,
-      "exercises": [
-        {
-          "id": "el-1",
-          "name": "Press de banca con barra",
-          "sets": 4,
-          "reps": 8,
-          "weightKg": 75
-        },
-        {
-          "id": "el-2",
-          "name": "Press inclinado mancuernas",
-          "sets": 3,
-          "reps": 10,
-          "weightKg": 26
-        },
-        {
-          "id": "el-3",
-          "name": "Fondos en paralelas",
-          "sets": 3,
-          "reps": 10,
-          "weightKg": 0
-        }
-      ],
-      "notes": "Gran congestión, subí peso en inclinado.",
-      "createdAt": 1791297295504
-    },
-    {
-      "id": "work-2",
-      "date": "2026-10-08",
-      "activity": "Gimnasio",
-      "routineName": "Espalda y Bíceps",
-      "durationMinutes": 60,
-      "exercises": [
-        {
-          "id": "el-4",
-          "name": "Dominadas pronas",
-          "sets": 4,
-          "reps": 8,
-          "weightKg": 0
-        },
-        {
-          "id": "el-5",
-          "name": "Remo con barra 90º",
-          "sets": 4,
-          "reps": 8,
-          "weightKg": 70
-        }
-      ],
-      "notes": "Buenas sensaciones en el dorsal.",
-      "createdAt": 1791470095504
-    },
-    {
-      "id": "work-3",
-      "date": "2026-10-11",
-      "activity": "Gimnasio",
-      "routineName": "Pierna & Core",
-      "durationMinutes": 70,
-      "exercises": [
-        {
-          "id": "el-6",
-          "name": "Sentadilla trasera",
-          "sets": 4,
-          "reps": 6,
-          "weightKg": 102.5
-        },
-        {
-          "id": "el-7",
-          "name": "Prensa inclinada",
-          "sets": 3,
-          "reps": 10,
-          "weightKg": 180
-        }
-      ],
-      "notes": "¡Nuevo récord personal en sentadilla con 102.5 kg!",
-      "createdAt": 1791729295504
-    }
-  ],
+  "workouts": [],
   "habits": [
-    {
-      "id": "hab-1",
-      "name": "Beber 2.5L de agua",
-      "icon": "droplets",
-      "color": "#38bdf8",
-      "frequencyDaysPerWeek": 7,
-      "completedDates": [
-        "2026-10-07",
-        "2026-10-08",
-        "2026-10-09",
-        "2026-10-10",
-        "2026-10-11",
-        "2026-10-12",
-        "2026-10-13"
-      ],
-      "createdAt": 1791901095504
-    },
-    {
-      "id": "hab-2",
-      "name": "Leer 20 minutos",
-      "icon": "book-open",
-      "color": "#a855f7",
-      "frequencyDaysPerWeek": 7,
-      "completedDates": [
-        "2026-10-06",
-        "2026-10-08",
-        "2026-10-09",
-        "2026-10-11",
-        "2026-10-12",
-        "2026-10-13"
-      ],
-      "createdAt": 1791901095504
-    },
-    {
-      "id": "hab-3",
-      "name": "Caminar 8.000 pasos",
-      "icon": "footprints",
-      "color": "#10b981",
-      "frequencyDaysPerWeek": 7,
-      "completedDates": [
-        "2026-10-07",
-        "2026-10-08",
-        "2026-10-09",
-        "2026-10-10",
-        "2026-10-11"
-      ],
-      "createdAt": 1791901095504
-    },
-    {
-      "id": "hab-4",
-      "name": "Entrenar físico",
-      "icon": "dumbbell",
-      "color": "#f59e0b",
-      "frequencyDaysPerWeek": 4,
-      "completedDates": [
-        "2026-10-06",
-        "2026-10-08",
-        "2026-10-11"
-      ],
-      "createdAt": 1791901095504
-    },
-    {
-      "id": "hab-5",
-      "name": "Dormir 8 horas",
-      "icon": "moon",
-      "color": "#6366f1",
-      "frequencyDaysPerWeek": 7,
-      "completedDates": [
-        "2026-10-08",
-        "2026-10-09",
-        "2026-10-10",
-        "2026-10-12",
-        "2026-10-13"
-      ],
-      "createdAt": 1791901095504
-    },
-    {
-      "id": "hab-6",
-      "name": "Sin gastos superfluos",
-      "icon": "wallet",
-      "color": "#ec4899",
-      "frequencyDaysPerWeek": 7,
-      "completedDates": [
-        "2026-10-07",
-        "2026-10-08",
-        "2026-10-10",
-        "2026-10-12"
-      ],
-      "createdAt": 1791901095504
-    }
+    { "id": "hab-1", "name": "Beber 2.5L de agua", "icon": "droplets", "color": "#38bdf8", "frequencyDaysPerWeek": 7, "completedDates": [], "createdAt": 1791901095504 },
+    { "id": "hab-2", "name": "Leer 20 minutos", "icon": "book-open", "color": "#a855f7", "frequencyDaysPerWeek": 7, "completedDates": [], "createdAt": 1791901095504 },
+    { "id": "hab-3", "name": "Caminar 8.000 pasos", "icon": "footprints", "color": "#10b981", "frequencyDaysPerWeek": 7, "completedDates": [], "createdAt": 1791901095504 },
+    { "id": "hab-4", "name": "Entrenar físico", "icon": "dumbbell", "color": "#f59e0b", "frequencyDaysPerWeek": 4, "completedDates": [], "createdAt": 1791901095504 },
+    { "id": "hab-5", "name": "Dormir 8 horas", "icon": "moon", "color": "#6366f1", "frequencyDaysPerWeek": 7, "completedDates": [], "createdAt": 1791901095504 },
+    { "id": "hab-6", "name": "Controlar gastos", "icon": "wallet", "color": "#ec4899", "frequencyDaysPerWeek": 7, "completedDates": [], "createdAt": 1791901095504 }
   ],
-  "tasks": [
-    {
-      "id": "task-1",
-      "title": "Revisar póliza anual de la moto",
-      "description": "Comparar con presupuesto de Mapfre antes del día 25",
-      "dueDate": "2026-10-13",
-      "dueTime": "18:30",
-      "priority": "alta",
-      "completed": false,
-      "category": "Finanzas",
-      "isReminder": true,
-      "recurring": "none",
-      "createdAt": 1791902015504
-    },
-    {
-      "id": "task-2",
-      "title": "Comprar frutas y pechugas en Mercadona",
-      "description": "Pasar al salir del entrenamiento",
-      "dueDate": "2026-10-13",
-      "dueTime": "20:00",
-      "priority": "media",
-      "completed": false,
-      "category": "Hogar",
-      "isReminder": false,
-      "recurring": "none",
-      "createdAt": 1791902025504
-    },
-    {
-      "id": "task-3",
-      "title": "Enviar informe mensual de diseño",
-      "description": "Adjuntar exportación en PDF",
-      "dueDate": "2026-10-15",
-      "dueTime": "12:00",
-      "priority": "alta",
-      "completed": false,
-      "category": "Trabajo",
-      "isReminder": true,
-      "recurring": "monthly",
-      "createdAt": 1791902035504
-    },
-    {
-      "id": "task-4",
-      "title": "Limpiar filtro aire acondicionado",
-      "dueDate": "2026-10-18",
-      "priority": "baja",
-      "completed": false,
-      "category": "Hogar",
-      "isReminder": false,
-      "recurring": "none",
-      "createdAt": 1791902045504
-    },
-    {
-      "id": "task-5",
-      "title": "Pagar cuota comunidad de propietarios",
-      "dueDate": "2026-10-05",
-      "priority": "alta",
-      "completed": true,
-      "category": "Finanzas",
-      "isReminder": true,
-      "recurring": "monthly",
-      "createdAt": 1791901995504
-    }
-  ],
+  "tasks": [],
   "goals": [
-    {
-      "id": "goal-1",
-      "title": "Fondo de emergencia 3.000 €",
-      "category": "Ahorro",
-      "targetValue": 3000,
-      "currentValue": 1850,
-      "unit": "€",
-      "targetDate": "2026-12-31",
-      "linkedTo": "savings",
-      "createdAt": 1791899095504
-    },
-    {
-      "id": "goal-2",
-      "title": "Entrenar 16 sesiones al mes",
-      "category": "Fitness",
-      "targetValue": 16,
-      "currentValue": 3,
-      "unit": "sesiones",
-      "targetDate": "2026-10-28",
-      "linkedTo": "workouts",
-      "createdAt": 1791900095504
-    },
-    {
-      "id": "goal-3",
-      "title": "Leer 12 libros este año",
-      "category": "Personal",
-      "targetValue": 12,
-      "currentValue": 8,
-      "unit": "libros",
-      "targetDate": "2026-12-31",
-      "createdAt": 1791897095504
-    },
-    {
-      "id": "goal-4",
-      "title": "Reducir restaurantes a < 150 €/mes",
-      "category": "Ahorro",
-      "targetValue": 150,
-      "currentValue": 28.5,
-      "unit": "€ gastados",
-      "targetDate": "2026-10-28",
-      "createdAt": 1791901095504
-    }
+    { "id": "goal-1", "title": "Fondo de emergencia", "category": "Ahorro", "targetValue": 0, "currentValue": 0, "unit": "€", "targetDate": "2026-12-31", "linkedTo": "savings", "createdAt": 1791899095504 },
+    { "id": "goal-2", "title": "Entrenar 16 sesiones al mes", "category": "Fitness", "targetValue": 16, "currentValue": 0, "unit": "sesiones", "targetDate": "2026-10-31", "linkedTo": "workouts", "createdAt": 1791900095504 }
   ]
 };
 
@@ -717,12 +155,24 @@ function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      return JSON.parse(raw);
+      const parsed = JSON.parse(raw);
+      if (parsed && parsed.version === 2) {
+        return parsed;
+      }
+      // Si venía de la versión 1 con datos de prueba, conservamos la URL de Google Sheets si la tenía
+      const clean = JSON.parse(JSON.stringify(INITIAL_DATA));
+      if (parsed && parsed.settings && parsed.settings.googleSheetsUrl) {
+        clean.settings.googleSheetsUrl = parsed.settings.googleSheetsUrl;
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
+      return clean;
     }
   } catch (e) {
     console.error('Error reading localStorage', e);
   }
-  return JSON.parse(JSON.stringify(INITIAL_DATA));
+  const clean = JSON.parse(JSON.stringify(INITIAL_DATA));
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(clean)); } catch(e){}
+  return clean;
 }
 
 function saveState() {
@@ -1393,24 +843,46 @@ function renderFinances(container) {
       <!-- Two column: Fixed Expenses & Recent Transactions -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Fixed Recurring Expenses -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-base font-bold text-gray-900 dark:text-white">Gastos Fijos Programados</h2>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-medium">${state.fixedExpenses.length} activos</span>
-          </div>
-          <div class="space-y-3">
-            ${state.fixedExpenses.map(fix => `
-              <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 flex items-center justify-between">
-                <div>
-                  <p class="text-xs font-bold text-gray-900 dark:text-white">${fix.concept}</p>
-                  <p class="text-[11px] text-gray-500 dark:text-gray-400">
-                    Día ${fix.dayOfMonth} · ${fix.frequency} · <span class="text-indigo-600 dark:text-indigo-400">${fix.category}</span>
-                  </p>
-                  ${fix.lastProcessedMonth === '2026-10' ? '<span class="inline-block mt-1 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">✓ Procesado Octubre</span>' : ''}
-                </div>
-                <span class="text-xs font-mono font-bold text-gray-900 dark:text-white">${formatMoney(fix.amount)}</span>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h2 class="text-base font-bold text-gray-900 dark:text-white">Gastos Fijos Programados</h2>
+                <p class="text-xs text-gray-500">Recurrentes de cada mes o periodo</p>
               </div>
-            `).join('')}
+              <button onclick="openAddFixedExpenseModal()" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-xs font-bold transition flex items-center gap-1">
+                <span>+</span> Fijo
+              </button>
+            </div>
+            <div class="space-y-3">
+              ${state.fixedExpenses.length === 0 ? `
+                <div class="p-6 text-center rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
+                  <span class="text-2xl block mb-1">📌</span>
+                  <p class="text-xs font-semibold text-gray-700 dark:text-gray-300">No hay gastos fijos todavía</p>
+                  <p class="text-[11px] text-gray-400 mt-0.5 mb-3">Añade alquiler, gimnasio, internet o cuotas fijas</p>
+                  <button onclick="openAddFixedExpenseModal()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition">
+                    + Añadir Primer Gasto Fijo
+                  </button>
+                </div>
+              ` : ''}
+              ${state.fixedExpenses.map(fix => `
+                <div class="p-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700 flex items-center justify-between gap-2">
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs font-bold text-gray-900 dark:text-white truncate">${fix.concept}</p>
+                    <p class="text-[11px] text-gray-500 dark:text-gray-400">
+                      Día ${fix.dayOfMonth} · ${fix.frequency} · <span class="text-indigo-600 dark:text-indigo-400">${fix.category}</span>
+                    </p>
+                    ${fix.lastProcessedMonth === '2026-10' ? '<span class="inline-block mt-0.5 text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">✓ Procesado este mes</span>' : ''}
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-mono font-bold text-gray-900 dark:text-white">${formatMoney(fix.amount)}</span>
+                    <button onclick="deleteFixedExpense('${fix.id}')" class="text-gray-400 hover:text-rose-500 p-1 transition" title="Eliminar gasto fijo">
+                      ${ICONS.trash}
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
           </div>
         </div>
 
@@ -1511,14 +983,19 @@ function renderTransactionsRows(filter) {
           tx.type === 'income' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' :
           'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300'
         }">${tx.category}</span>
-        ${tx.isFixed ? '<span class="ml-1 text-[10px] text-indigo-500 font-bold">[Fijo]</span>' : ''}
+        ${tx.isFixed ? '<span class="ml-1 text-[10px] text-indigo-500 font-bold bg-indigo-50 dark:bg-indigo-900/30 px-1.5 py-0.5 rounded">📌 Fijo</span>' : ''}
       </td>
       <td class="py-3 text-gray-500 dark:text-gray-400 font-mono text-[11px]">${formatDate(tx.date)}</td>
       <td class="py-3 text-right font-mono font-bold ${tx.type === 'income' ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}">
         ${tx.type === 'income' ? '+' : '-'}${formatMoney(tx.amount)}
       </td>
-      <td class="py-3 text-right">
-        <button onclick="deleteTransaction('${tx.type}', '${tx.id}')" class="text-gray-400 hover:text-rose-500 transition p-1">
+      <td class="py-3 text-right whitespace-nowrap">
+        ${tx.type === 'expense' && !tx.isFixed ? `
+          <button onclick="makeExpenseFixed('${tx.id}')" title="Convertir en Gasto Fijo Recurrente" class="px-2 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-[10px] font-bold mr-1 transition">
+            📌 Hacer Fijo
+          </button>
+        ` : ''}
+        <button onclick="deleteTransaction('${tx.type}', '${tx.id}')" class="text-gray-400 hover:text-rose-500 transition p-1" title="Eliminar">
           ${ICONS.trash}
         </button>
       </td>
@@ -2444,7 +1921,90 @@ function closeModal(modalId) {
   }
 }
 
-// Form Handlers
+// Form Handlers & Helpers
+function onIncomeTypeChange() {
+  const typeEl = document.getElementById('inc-type');
+  const conceptInput = document.getElementById('inc-concept');
+  const notesInput = document.getElementById('inc-notes');
+  const recurringInput = document.getElementById('inc-recurring');
+  if (!typeEl) return;
+
+  const type = typeEl.value;
+  if (type === 'nomina') {
+    conceptInput.value = 'Nómina Mensual';
+    notesInput.value = 'Ingreso principal mensual recurrente';
+    recurringInput.checked = true;
+  } else if (type === 'bonus') {
+    conceptInput.value = 'Bonus Semestral';
+    notesInput.value = 'Paga extra / Bonus (2 veces al año)';
+    recurringInput.checked = false;
+  } else {
+    conceptInput.value = '';
+    notesInput.value = '';
+    recurringInput.checked = false;
+  }
+}
+
+function toggleFixedOptions() {
+  const chk = document.getElementById('exp-make-fixed');
+  const container = document.getElementById('fixed-options-container');
+  if (!chk || !container) return;
+  if (chk.checked) {
+    container.classList.remove('hidden');
+  } else {
+    container.classList.add('hidden');
+  }
+}
+
+function makeExpenseFixed(expenseId) {
+  const exp = state.expenses.find(e => e.id === expenseId);
+  if (!exp) return;
+  if (exp.isFixed) {
+    showToast('Este gasto ya es un gasto fijo recurrente', 'info');
+    return;
+  }
+
+  const day = prompt(`¿Qué día del mes se cobrará habitualmente este gasto? (1-31):`, "1");
+  if (!day) return;
+
+  const fixId = 'fix-' + Date.now();
+  state.fixedExpenses.unshift({
+    id: fixId,
+    concept: exp.concept,
+    amount: exp.amount,
+    category: exp.category,
+    dayOfMonth: parseInt(day, 10) || 1,
+    frequency: 'mensual',
+    active: true,
+    lastProcessedMonth: exp.date ? exp.date.slice(0, 7) : '2026-10',
+    createdAt: Date.now()
+  });
+
+  exp.isFixed = true;
+  exp.fixedExpenseId = fixId;
+  saveState();
+  triggerCelebration();
+  showToast(`¡"${exp.concept}" convertido en Gasto Fijo recurrente! 📌`, 'success');
+  renderFinances(document.getElementById('main-content'));
+}
+
+function openAddFixedExpenseModal() {
+  openModal('addExpenseModal');
+  const chk = document.getElementById('exp-make-fixed');
+  if (chk) {
+    chk.checked = true;
+    toggleFixedOptions();
+  }
+}
+
+function deleteFixedExpense(id) {
+  if (!confirm('¿Eliminar este gasto fijo recurrente?')) return;
+  state.fixedExpenses = state.fixedExpenses.filter(f => f.id !== id);
+  saveState();
+  renderFinances(document.getElementById('main-content'));
+  showToast('Gasto fijo eliminado', 'info');
+}
+
 function submitAddIncome(e) {
   e.preventDefault();
   const concept = document.getElementById('inc-concept').value;
@@ -2465,7 +2025,8 @@ function submitAddIncome(e) {
 
   saveState();
   closeModal('addIncomeModal');
-  showToast('Ingreso añadido correctamente', 'success');
+  triggerCelebration();
+  showToast('Ingreso registrado con éxito 💰', 'success');
   renderCurrentTab();
 }
 
@@ -2477,6 +2038,27 @@ function submitAddExpense(e) {
   const date = document.getElementById('exp-date').value || '2026-10-13';
   const notes = document.getElementById('exp-notes').value;
 
+  const makeFixed = document.getElementById('exp-make-fixed') ? document.getElementById('exp-make-fixed').checked : false;
+  let fixId = null;
+
+  if (makeFixed) {
+    fixId = 'fix-' + Date.now();
+    const day = parseInt(document.getElementById('exp-fixed-day').value, 10) || 1;
+    const freq = document.getElementById('exp-fixed-freq').value || 'mensual';
+
+    state.fixedExpenses.unshift({
+      id: fixId,
+      concept,
+      amount,
+      category,
+      dayOfMonth: day,
+      frequency: freq,
+      active: true,
+      lastProcessedMonth: date.slice(0, 7),
+      createdAt: Date.now()
+    });
+  }
+
   state.expenses.unshift({
     id: 'exp-' + Date.now(),
     concept,
@@ -2484,12 +2066,19 @@ function submitAddExpense(e) {
     category,
     date,
     notes,
+    isFixed: makeFixed,
+    fixedExpenseId: fixId,
     createdAt: Date.now()
   });
 
   saveState();
   closeModal('addExpenseModal');
-  showToast('Gasto registrado correctamente', 'success');
+  if (makeFixed) {
+    triggerCelebration();
+    showToast('Gasto registrado y añadido a Gastos Fijos recurrentes 📌', 'success');
+  } else {
+    showToast('Gasto registrado correctamente', 'success');
+  }
   renderCurrentTab();
 }
 
